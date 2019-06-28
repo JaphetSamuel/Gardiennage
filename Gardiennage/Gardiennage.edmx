@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Gardiennage.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GardiennageStoreContainer">
+    <EntitySet Name="GardienSet" EntityType="Gardiennage.Store.GardienSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContratSet" EntityType="Gardiennage.Store.ContratSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GardienContrat" EntityType="Gardiennage.Store.GardienContrat" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_GardienContrat_Gardien" Association="Gardiennage.Store.FK_GardienContrat_Gardien">
+      <End Role="Gardien" EntitySet="GardienSet" />
+      <End Role="GardienContrat" EntitySet="GardienContrat" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GardienContrat_Contrat" Association="Gardiennage.Store.FK_GardienContrat_Contrat">
+      <End Role="Contrat" EntitySet="ContratSet" />
+      <End Role="GardienContrat" EntitySet="GardienContrat" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="GardienSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="FinDambauche" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SituationMatrimoniale" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Domicile" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Matricule" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UrlCv" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DebutDambauche" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContratSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Debut" Type="datetime" Nullable="false" />
+    <Property Name="Fin" Type="datetime" Nullable="false" />
+    <Property Name="Lieu" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Client" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UrlFichier" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="GardienContrat">
+    <Key>
+      <PropertyRef Name="Gardiens_Id" />
+      <PropertyRef Name="Contrats_Id" />
+    </Key>
+    <Property Name="Gardiens_Id" Type="int" Nullable="false" />
+    <Property Name="Contrats_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_GardienContrat_Gardien">
+    <End Role="Gardien" Type="Gardiennage.Store.GardienSet" Multiplicity="1" />
+    <End Role="GardienContrat" Type="Gardiennage.Store.GardienContrat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gardien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GardienContrat">
+        <PropertyRef Name="Gardiens_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GardienContrat_Contrat">
+    <End Role="GardienContrat" Type="Gardiennage.Store.GardienContrat" Multiplicity="*" />
+    <End Role="Contrat" Type="Gardiennage.Store.ContratSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Contrat">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GardienContrat">
+        <PropertyRef Name="Contrats_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Gardiennage" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="GardiennageContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GardienSet" EntityType="Gardiennage.Gardien" />
+          <EntitySet Name="ContratSet" EntityType="Gardiennage.Contrat" />
+          <AssociationSet Name="GardienContrat" Association="Gardiennage.GardienContrat">
+            <End Role="Gardien" EntitySet="GardienSet" />
+            <End Role="Contrat" EntitySet="ContratSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Gardien">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" />
+          <Property Name="Prenom" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="FinDambauche" Type="String" Nullable="true" />
+          <Property Name="SituationMatrimoniale" Type="String" Nullable="false" />
+          <Property Name="Domicile" Type="String" Nullable="false" />
+          <Property Name="Matricule" Type="String" Nullable="false" />
+          <NavigationProperty Name="Contrats" Relationship="Gardiennage.GardienContrat" FromRole="Gardien" ToRole="Contrat" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="UrlCv" Type="String" Nullable="true" />
+          <Property Name="DebutDambauche" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contrat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Debut" Type="DateTime" Nullable="false" />
+          <Property Name="Fin" Type="DateTime" Nullable="false" />
+          <Property Name="Lieu" Type="String" Nullable="false" />
+          <Property Name="Client" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" />
+          <NavigationProperty Name="Gardiens" Relationship="Gardiennage.GardienContrat" FromRole="Contrat" ToRole="Gardien" />
+          <Property Name="UrlFichier" Type="String" Nullable="true" />
+        </EntityType>
+        <Association Name="GardienContrat">
+          <End Type="Gardiennage.Gardien" Role="Gardien" Multiplicity="*" />
+          <End Type="Gardiennage.Contrat" Role="Contrat" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GardiennageStoreContainer" CdmEntityContainer="GardiennageContainer">
+    <EntitySetMapping Name="GardienSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Gardiennage.Gardien)">
+        <MappingFragment StoreEntitySet="GardienSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="FinDambauche" ColumnName="FinDambauche" />
+          <ScalarProperty Name="SituationMatrimoniale" ColumnName="SituationMatrimoniale" />
+          <ScalarProperty Name="Domicile" ColumnName="Domicile" />
+          <ScalarProperty Name="Matricule" ColumnName="Matricule" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UrlCv" ColumnName="UrlCv" />
+          <ScalarProperty Name="DebutDambauche" ColumnName="DebutDambauche" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContratSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Gardiennage.Contrat)">
+        <MappingFragment StoreEntitySet="ContratSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Debut" ColumnName="Debut" />
+          <ScalarProperty Name="Fin" ColumnName="Fin" />
+          <ScalarProperty Name="Lieu" ColumnName="Lieu" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="UrlFichier" ColumnName="UrlFichier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="GardienContrat" TypeName="Gardiennage.GardienContrat" StoreEntitySet="GardienContrat">
+      <EndProperty Name="Gardien">
+        <ScalarProperty Name="Id" ColumnName="Gardiens_Id" />
+      </EndProperty>
+      <EndProperty Name="Contrat">
+        <ScalarProperty Name="Id" ColumnName="Contrats_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Gardiennage" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="GardiennageContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="GardienSet" EntityType="Gardiennage.Gardien" />
+    <EntitySet Name="ContratSet" EntityType="Gardiennage.Contrat" />
+    <AssociationSet Name="GardienContrat" Association="Gardiennage.GardienContrat">
+      <End Role="Gardien" EntitySet="GardienSet" />
+      <End Role="Contrat" EntitySet="ContratSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Gardien">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nom" Type="String" Nullable="false" />
+    <Property Name="Prenom" Type="String" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="FinDambauche" Type="String" Nullable="true" />
+    <Property Name="SituationMatrimoniale" Type="String" Nullable="false" />
+    <Property Name="Domicile" Type="String" Nullable="false" />
+    <Property Name="Matricule" Type="String" Nullable="false" />
+    <NavigationProperty Name="Contrats" Relationship="Gardiennage.GardienContrat" FromRole="Gardien" ToRole="Contrat" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="UrlCv" Type="String" Nullable="true" />
+    <Property Name="DebutDambauche" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contrat">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Debut" Type="DateTime" Nullable="false" />
+    <Property Name="Fin" Type="DateTime" Nullable="false" />
+    <Property Name="Lieu" Type="String" Nullable="false" />
+    <Property Name="Client" Type="String" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" />
+    <Property Name="Code" Type="String" Nullable="false" />
+    <NavigationProperty Name="Gardiens" Relationship="Gardiennage.GardienContrat" FromRole="Contrat" ToRole="Gardien" />
+    <Property Name="UrlFichier" Type="String" Nullable="true" />
+  </EntityType>
+  <Association Name="GardienContrat">
+    <End Type="Gardiennage.Gardien" Role="Gardien" Multiplicity="*" />
+    <End Type="Gardiennage.Contrat" Role="Contrat" Multiplicity="*" />
+  </Association>
+</Schema>

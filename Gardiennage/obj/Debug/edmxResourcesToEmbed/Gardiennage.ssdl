@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Gardiennage.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GardiennageStoreContainer">
+    <EntitySet Name="GardienSet" EntityType="Gardiennage.Store.GardienSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContratSet" EntityType="Gardiennage.Store.ContratSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GardienContrat" EntityType="Gardiennage.Store.GardienContrat" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_GardienContrat_Gardien" Association="Gardiennage.Store.FK_GardienContrat_Gardien">
+      <End Role="Gardien" EntitySet="GardienSet" />
+      <End Role="GardienContrat" EntitySet="GardienContrat" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GardienContrat_Contrat" Association="Gardiennage.Store.FK_GardienContrat_Contrat">
+      <End Role="Contrat" EntitySet="ContratSet" />
+      <End Role="GardienContrat" EntitySet="GardienContrat" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="GardienSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="FinDambauche" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SituationMatrimoniale" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Domicile" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Matricule" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UrlCv" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="DebutDambauche" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContratSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Debut" Type="datetime" Nullable="false" />
+    <Property Name="Fin" Type="datetime" Nullable="false" />
+    <Property Name="Lieu" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Client" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UrlFichier" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="GardienContrat">
+    <Key>
+      <PropertyRef Name="Gardiens_Id" />
+      <PropertyRef Name="Contrats_Id" />
+    </Key>
+    <Property Name="Gardiens_Id" Type="int" Nullable="false" />
+    <Property Name="Contrats_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_GardienContrat_Gardien">
+    <End Role="Gardien" Type="Gardiennage.Store.GardienSet" Multiplicity="1" />
+    <End Role="GardienContrat" Type="Gardiennage.Store.GardienContrat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gardien">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GardienContrat">
+        <PropertyRef Name="Gardiens_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GardienContrat_Contrat">
+    <End Role="GardienContrat" Type="Gardiennage.Store.GardienContrat" Multiplicity="*" />
+    <End Role="Contrat" Type="Gardiennage.Store.ContratSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Contrat">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GardienContrat">
+        <PropertyRef Name="Contrats_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GardiennageStoreContainer" CdmEntityContainer="GardiennageContainer">
+    <EntitySetMapping Name="GardienSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Gardiennage.Gardien)">
+        <MappingFragment StoreEntitySet="GardienSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="FinDambauche" ColumnName="FinDambauche" />
+          <ScalarProperty Name="SituationMatrimoniale" ColumnName="SituationMatrimoniale" />
+          <ScalarProperty Name="Domicile" ColumnName="Domicile" />
+          <ScalarProperty Name="Matricule" ColumnName="Matricule" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UrlCv" ColumnName="UrlCv" />
+          <ScalarProperty Name="DebutDambauche" ColumnName="DebutDambauche" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ContratSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Gardiennage.Contrat)">
+        <MappingFragment StoreEntitySet="ContratSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Debut" ColumnName="Debut" />
+          <ScalarProperty Name="Fin" ColumnName="Fin" />
+          <ScalarProperty Name="Lieu" ColumnName="Lieu" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="UrlFichier" ColumnName="UrlFichier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="GardienContrat" TypeName="Gardiennage.GardienContrat" StoreEntitySet="GardienContrat">
+      <EndProperty Name="Gardien">
+        <ScalarProperty Name="Id" ColumnName="Gardiens_Id" />
+      </EndProperty>
+      <EndProperty Name="Contrat">
+        <ScalarProperty Name="Id" ColumnName="Contrats_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
